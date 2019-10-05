@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
+import '../Components/Styles/ExerciceNew.css';
 import ExerciseForm from '../Components/ExerciseForm';
 import Card from '../Components/Card';
 
-class ExerciceNew extends Component {
-	state = {
+const ExerciceNew = props => {
+	const [state, setState] = useState({
 		form: {
 			title: '',
 			description: '',
@@ -12,29 +13,27 @@ class ExerciceNew extends Component {
 			leftColor: '',
 			rightColor: ''
 		}
-	};
+	});
 
-	handleChange = e => {
-		this.setState({
+	const handleChange = e => {
+		setState({
 			form: {
-				...this.state.form,
+				...state.form,
 				[e.target.name]: e.target.value
 			}
 		});
 	};
 
-	render() {
-		return (
-			<div className='row'>
-				<div className='col-sm'>
-					<Card {...this.state.form} />
-				</div>
-				<div className='col-sm'>
-					<ExerciseForm onChange={this.handleChange} form={this.state.form} />
-				</div>
+	return (
+		<div className='ExerciseNew_Lateral_Spaces row'>
+			<div className='col-sm ExerciseNew_Card_Space'>
+				<Card {...state.form} />
 			</div>
-		);
-	}
-}
+			<div className='col-sm ExerciseNew_Form_Space'>
+				<ExerciseForm onChange={handleChange} form={state.form} />
+			</div>
+		</div>
+	);
+};
 
 export default ExerciceNew;

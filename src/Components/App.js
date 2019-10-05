@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Exercices from '../Pages/Exercices';
 import ExerciceNew from '../Pages/ExerciceNew';
-import NotFound from '../Pages/NotFound';
+import NotFound from '../Pages/404';
 
 const App = props => (
 	<Router>
