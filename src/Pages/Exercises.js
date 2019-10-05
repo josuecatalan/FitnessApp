@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
 import Welcome from '../Components/Welcome';
-import ExcerciceList from '../Components/ExcerciceList';
+import ExerciseList from '../Components/ExerciseList';
 import AddButton from '../Components/AddButton';
 import Loading from '../Components/Loading';
 import FatalError from './500';
 
-const Exercices = props => {
+const Exercises = props => {
 	const [state, setState] = useState({
 		data: [],
 		loading: true,
@@ -51,10 +51,10 @@ const Exercices = props => {
 	return (
 		<div className='container'>
 			<Welcome username='Josh' />
-			<ExcerciceList exercices={state.data} />
+			<ExerciseList exercises={state.data} />
 			<AddButton />
 		</div>
 	);
 };
 
-export default Exercices;
+export default Exercises;
