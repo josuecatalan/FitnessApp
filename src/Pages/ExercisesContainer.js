@@ -1,44 +1,19 @@
 import React from 'react';
 
 import Exercises from './Exercises';
+import useFetch from '../Hooks/useFetch';
 import Loading from '../Components/Loading';
 import FatalError from './500';
+import url from '../Config';
 
-class ExercisesContainer extends React.Component {
-	state = {
-		data: [],
-		loading: true,
-		error: null
-	};
+const ExercisesContainer = () => {
+	const { data, loading, error } = useFetch(`${url}/exercises`);
 
-	async componentDidMount() {
-		await this.fetchExercises();
-	}
+	if (loading) return <Loading />;
 
-	fetchExercises = async () => {
-		try {
-			let res = await fetch('http://localhost:4000/api/exercises');
-			let data = await res.json();
+	if (error) return <FatalError />;
 
-			this.setState({
-				data,
-				loading: false
-			});
-		} catch (error) {
-			this.setState({
-				loading: false,
-				error
-			});
-		}
-	};
-
-	render() {
-		if (this.state.loading) return <Loading />;
-
-		if (this.state.error) return <FatalError />;
-
-		return <Exercises data={this.state.data} />;
-	}
-}
+	return <Exercises data={data} />;
+};
 
 export default ExercisesContainer;

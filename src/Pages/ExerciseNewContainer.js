@@ -1,36 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 
+import Loading from '../Components/Loading';
 import ExerciseNew from './ExerciseNew';
 import FatalError from './500';
+import url from '../Config';
 
-class ExerciseNewContainer extends React.Component {
-	state = {
-		form: {
-			title: '',
-			description: '',
-			img: '',
-			leftColor: '',
-			rightColor: ''
-		},
-		loading: false,
-		error: null
-	};
+const ExerciseNewContainer = ({ history }) => {
+	const [form, setForm] = useState({
+		title: '',
+		description: '',
+		img: '',
+		leftColor: '',
+		rightColor: ''
+	});
 
-	handleChange = e => {
-		this.setState({
-			form: {
-				...this.state.form,
-				[e.target.name]: e.target.value
-			}
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(null);
+
+	const handleChange = e => {
+		setForm({
+			...form,
+			[e.target.name]: e.target.value
 		});
 	};
 
-	handleSubmit = async e => {
-		this.setState({
-			loading: true
-		});
+	const handleSubmit = async e => {
+		setLoading(true);
 
 		e.preventDefault();
+
 		try {
 			let config = {
 				method: 'POST',
@@ -38,36 +36,24 @@ class ExerciseNewContainer extends React.Component {
 					Accept: 'application/json',
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify(this.state.form)
+				body: JSON.stringify(form)
 			};
 
-			let res = await fetch('http://localhost:4000/api/exercises', config);
-			let json = await res.json();
+			await fetch(`${url}/exercises`, config);
 
-			this.setState({
-				loading: false
-			});
-
-			this.props.history.push('/exercise');
+			setLoading(false);
+			history.push('/exercise');
 		} catch (error) {
-			this.setState({
-				loading: false,
-				error
-			});
+			setLoading(false);
+			setError(error);
 		}
 	};
 
-	render() {
-		if (this.state.error) return <FatalError />;
+	if (loading) return <Loading />;
 
-		return (
-			<ExerciseNew
-				form={this.state.form}
-				onChange={this.handleChange}
-				onSubmit={this.handleSubmit}
-			/>
-		);
-	}
-}
+	if (error) return <FatalError />;
+
+	return <ExerciseNew form={form} onChange={handleChange} onSubmit={handleSubmit} />;
+};
 
 export default ExerciseNewContainer;
