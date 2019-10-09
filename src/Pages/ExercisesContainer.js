@@ -6,7 +6,7 @@ import Loading from '../Components/Loading';
 import FatalError from './500';
 import url from '../Config';
 
-const ExercisesContainer = () => {
+const ExercisesContainer = props => {
 	const { data, loading, error } = useFetch(`${url}/exercises`);
 
 	if (loading) return <Loading />;

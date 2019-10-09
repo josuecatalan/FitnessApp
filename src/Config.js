@@ -1,3 +1,3 @@
-const url = 'http://localhost:4000/api';
+const url = 'https://fitnessappi.herokuapp.com/api';
 
 export default url;

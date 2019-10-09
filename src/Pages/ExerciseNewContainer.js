@@ -42,7 +42,7 @@ const ExerciseNewContainer = ({ history }) => {
 			await fetch(`${url}/exercises`, config);
 
 			setLoading(false);
-			history.push('/exercise');
+			history.push('/');
 		} catch (error) {
 			setLoading(false);
 			setError(error);
